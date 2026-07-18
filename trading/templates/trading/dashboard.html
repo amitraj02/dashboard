@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trading Dashboard - NIFTY Live</title>
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'trading/css/style.css' %}">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <h1>NIFTY Live Spot</h1>
+          <span class="market-status open">OPEN</span>
+          <span class="current-time" id="current-time">--:--:--</span>
+        </div>
+        <div class="header-right">
+          <div class="toggle-container">
+            <span>Strategy:</span>
+            <label class="switch">
+              <input type="checkbox" id="strategy-toggle" checked>
+              <span class="slider round"></span>
+            </label>
+            <span id="strategy-status" class="status-on">ON</span>
+          </div>
+          <div class="paper-trading-indicator">
+            <span class="dot"></span>
+            Paper Trading Mode
+          </div>
+        </div>
+      </header>
+
+      <!-- Top Summary Cards -->
+      <section class="summary-cards">
+        <div class="card blue-card">
+          <span class="card-title">NIFTY Spot</span>
+          <span class="card-value" id="nifty-spot">24,350.45</span>
+        </div>
+        <div class="card">
+          <span class="card-title">Trend</span>
+          <span class="card-value green-text">BULLISH</span>
+        </div>
+        <div class="card">
+          <span class="card-title">VIX / Volatility</span>
+          <span class="card-value">13.24</span>
+        </div>
+        <div class="card">
+          <span class="card-title">Buy/Sell Signal</span>
+          <span class="card-value green-text">BUY</span>
+        </div>
+        <div class="card">
+          <span class="card-title">Today's P&L</span>
+          <span class="card-value green-text">+ ₹4,250.00</span>
+        </div>
+        <div class="card blue-card">
+          <span class="card-title">Active Position</span>
+          <span class="card-value">1 NIFTY 24400 CE</span>
+        </div>
+      </section>
+
+      <!-- Main Layout -->
+      <div class="main-layout">
+        
+        <!-- Center (Chart) -->
+        <main class="chart-container">
+          <div class="chart-header">
+            <h2>NIFTY 50 - 5 Min</h2>
+          </div>
+          <div id="tv-chart" class="chart-area"></div>
+        </main>
+
+        <!-- Right Sidebar (Option Chain) -->
+        <aside class="right-sidebar">
+          <div class="sidebar-header">
+            <h2>Live Option Chain</h2>
+            <span class="expiry">Expiry: 20-Jul</span>
+          </div>
+          <div class="option-chain">
+            <div class="oc-header">
+              <div class="calls">CALLS (CE)</div>
+              <div class="strike">STRIKE</div>
+              <div class="puts">PUTS (PE)</div>
+            </div>
+            <div class="oc-body" id="oc-body">
+              <!-- Dynamically generated rows -->
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Bottom Panels -->
+      <section class="bottom-panels">
+        <div class="panel">
+          <h3>Current Position</h3>
+          <div class="panel-content">
+            <p><strong>Instrument:</strong> NIFTY 24400 CE</p>
+            <p><strong>Qty:</strong> 50</p>
+            <p><strong>Entry:</strong> 124.50</p>
+            <p><strong>LTP:</strong> <span class="green-text">145.20</span></p>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Stop Loss & Target</h3>
+          <div class="panel-content">
+            <p><strong>SL:</strong> 110.00</p>
+            <p><strong>Target:</strong> 180.00</p>
+            <p><strong>Status:</strong> Trailing</p>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Risk/Reward</h3>
+          <div class="panel-content">
+            <p><strong>Risk:</strong> ₹725.00</p>
+            <p><strong>Reward:</strong> ₹2,775.00</p>
+            <p><strong>Ratio:</strong> 1:3.8</p>
+          </div>
+        </div>
+        <div class="panel trade-history-panel">
+          <h3>Trade History</h3>
+          <table class="trade-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>P&L</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>09:45</td>
+                <td class="green-text">BUY</td>
+                <td>124.50</td>
+                <td>--</td>
+              </tr>
+              <tr>
+                <td>10:15</td>
+                <td class="red-text">SELL</td>
+                <td>98.00</td>
+                <td class="red-text">-₹450</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel system-logs-panel">
+          <h3>System Logs</h3>
+          <div class="logs" id="system-logs">
+            <p><span class="time">[14:32:10]</span> Strategy condition met. Initiating BUY.</p>
+            <p class="warning-text"><span class="time">[14:30:00]</span> VIX spike detected.</p>
+            <p><span class="time">[14:28:45]</span> Market data feed stable.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Lightweight Charts via CDN -->
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="{% static 'trading/js/main.js' %}"></script>
+  </body>
+</html>
